@@ -3,6 +3,10 @@
 track=`jq -r '.track' config.json`
 labels=`jq -r '.labels' config.json`
 
+if [ -f './labels.csv' ]; then
+    labels='./labels.csv'
+fi
+
 [ ! -d ./filtered_track ] && mkdir -p filtered_track
 
 [ ! -f ./filtered_track/track.tck ] && connectome2tck ${track} ${labels} ./filtered_ -nodes 1 -exclusive -keep_self -nthreads 8 && mv ./filtered_*.tck ./filtered_track/track.tck
