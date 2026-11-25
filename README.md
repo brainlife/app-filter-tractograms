@@ -3,6 +3,31 @@
 
 # Sample tractograms based on labels assignments
 
+<!-- brainlife-app:begin (generated from the App manifest; edit the manifest, not this block) -->
+
+**Keeps the streamlines of a tractogram whose label is 1 in a binary labels file (e.g. from SIFT) and removes the rest, using MRtrix3 connectome2tck.**
+
+Uses MRtrix3 connectome2tck with the per-streamline labels as node assignments to extract the streamlines labelled 1 into a new tractogram. Use it to apply a streamline selection, such as the SIFT surviving-streamline labels, to the original tractogram. The labels file must have one entry per streamline of the input tractogram.
+
+Run it on brainlife.io: [https://doi.org/10.25663/brainlife.app.619](https://doi.org/10.25663/brainlife.app.619)
+
+| Input | Datatype | Required | Description |
+|---|---|---|---|
+| `track` | `neuro/track/tck` | yes | Tractogram to filter. |
+| `labels` | `neuro/labels` | yes | Per-streamline labels (one value per streamline); streamlines labelled 1 are kept. |
+
+| Output | Datatype | Description |
+|---|---|---|
+| `filtered_track` | `neuro/track/tck` | Tractogram containing only the streamlines labelled 1. |
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `binarize_labels` | boolean | `true` | Intended to binarise the labels (any value > 0 becomes 1) with binarize_labels.py before filtering. Note: main on this branch never runs binarize_labels.py, so the setting has no effect. |
+
+Runtime: container `brainlife/mrtrix3:3.0.3`; 4 CPUs; 40 GB memory; 1 h walltime.
+
+<!-- brainlife-app:end -->
+
 This app will sample streamlines from an input tractogram based on a binary labels assignment file, where 1 == streamlines to keep and 0 == streamlines to remove. For example, one could pass the labels datatype from the SIFT app into this app, and return a subsampled tractogram.
 
 ### Authors
